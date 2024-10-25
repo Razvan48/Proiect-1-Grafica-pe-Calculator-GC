@@ -398,3 +398,12 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+!Proiect-1/Proiect-1/lib/x64/
+!Proiect-1/Proiect-1/lib/x32/
+
+
+
+
+
