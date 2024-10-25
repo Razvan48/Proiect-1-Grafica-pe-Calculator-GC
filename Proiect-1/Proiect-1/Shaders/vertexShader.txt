@@ -1,0 +1,15 @@
+#version 330 core
+
+layout(location = 0) in vec2 vertexCoord;
+layout(location = 1) in vec2 inTextureCoord;
+
+uniform mat4 transformationMatrix;
+
+out vec2 textureCoord;
+
+void main()
+{
+    textureCoord = vec2(inTextureCoord.x, 1.0f - inTextureCoord.y); // Flip pe axa OY
+    gl_Position = transformationMatrix * vec4(vertexCoord, 0.0f, 1.0f);
+}
+
