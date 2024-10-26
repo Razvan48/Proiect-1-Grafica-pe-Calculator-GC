@@ -42,6 +42,7 @@ private:
 	void populateBirdPrimitive(std::vector<GLfloat>& coordinates, std::vector<GLuint>& indices);
 	const int NUM_EDGES_THROWABLE_PRIMITIVE;
 	void populateThrowablePrimitive(std::vector<GLfloat>& coordinates, std::vector<GLuint>& indices);
+	void populateBackgroundPrimitive(std::vector<GLfloat>& coordinates, std::vector<GLuint>& indices);
 
 	void generatePrimitiveBuffers(const std::string& primitiveName);
 

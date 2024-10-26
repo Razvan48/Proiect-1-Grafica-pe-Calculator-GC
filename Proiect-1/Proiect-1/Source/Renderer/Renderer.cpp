@@ -41,10 +41,9 @@ Renderer::Renderer()
 	this->textureBlendFactorLocation = glGetUniformLocation(this->shaderProgram, "textureBlendFactor");
 	this->backgroundBlendFactorLocation = glGetUniformLocation(this->shaderProgram, "backgroundBlendFactor");
 
-	std::cout << this->transformationMatrixLocation << ' ' << this->colorLocation << ' ' << this->textureBlendFactorLocation << ' ' << this->backgroundBlendFactorLocation << std::endl;
-
 	this->generatePrimitiveBuffers("birdPrimitive");
 	this->generatePrimitiveBuffers("throwablePrimitive");
+	this->generatePrimitiveBuffers("backgroundPrimitive");
 
 	// Teoretic ar fi enabled pt fiecare apel in parte, apoi glDisable(GL_BLEND);
 	glEnable(GL_BLEND);
@@ -122,6 +121,40 @@ void Renderer::populateThrowablePrimitive(std::vector<GLfloat>& coordinates, std
 	}
 }
 
+void Renderer::populateBackgroundPrimitive(std::vector<GLfloat>& coordinates, std::vector<GLuint>& indices)
+{
+	coordinates.clear();
+	indices.clear();
+
+	coordinates.push_back(-0.5f);
+	coordinates.push_back(-0.5f);
+	coordinates.push_back(0.0f);
+	coordinates.push_back(0.0f);
+
+	coordinates.push_back(0.5f);
+	coordinates.push_back(-0.5f);
+	coordinates.push_back(1.0f);
+	coordinates.push_back(0.0f);
+
+	coordinates.push_back(-0.5f);
+	coordinates.push_back(0.5f);
+	coordinates.push_back(0.0f);
+	coordinates.push_back(1.0f);
+
+	coordinates.push_back(0.5f);
+	coordinates.push_back(0.5f);
+	coordinates.push_back(1.0f);
+	coordinates.push_back(1.0f);
+
+	indices.push_back(0);
+	indices.push_back(1);
+	indices.push_back(2);
+
+	indices.push_back(2);
+	indices.push_back(1);
+	indices.push_back(3);
+}
+
 void Renderer::generatePrimitiveBuffers(const std::string& primitiveName)
 {
 	if (this->primitives.find(primitiveName) != this->primitives.end())
@@ -143,6 +176,10 @@ void Renderer::generatePrimitiveBuffers(const std::string& primitiveName)
 	else if (primitiveName == "throwablePrimitive")
 	{
 		this->populateThrowablePrimitive(*coordinates, *indices);
+	}
+	else if (primitiveName == "backgroundPrimitive")
+	{
+		this->populateBackgroundPrimitive(*coordinates, *indices);
 	}
 	else
 	{

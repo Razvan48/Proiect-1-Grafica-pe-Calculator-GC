@@ -3,6 +3,10 @@
 #include "../WindowManager/WindowManager.h"
 #include "../TextureManager/TextureManager.h"
 #include "../Renderer/Renderer.h"
+#include "../InputManager/InputManager.h"
+
+#include "../Entity/Entity.h"
+#include "../Entity/ThrowableEntity/ThrowableEntity.h"
 
 Application::Application()
 {
@@ -38,12 +42,22 @@ void Application::run()
 
 void Application::update()
 {
+	ThrowableEntity::get().update();
+	for (int i = 0; i < this->entities.size(); ++i)
+		this->entities[i]->update();
 
+	InputManager::get().update(); // Trebuie sa fie ultima in metoda de update() ca sa nu anuleze efectele de input.
 }
 
 void Application::start()
 {
 	this->loadResources();
+
+	// TODO: Incarcare entitati
+
+
+
+
 	this->run();
 }
 
@@ -64,6 +78,17 @@ void Application::draw(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// TODO: draw
+	Renderer::get().draw(WindowManager::get().getWindowWidth() / 2.0f,
+		WindowManager::get().getWindowHeight() / 2.0f,
+		WindowManager::get().getWindowWidth(),
+		WindowManager::get().getWindowHeight(),
+		0.0f, "backgroundPrimitive", "background", glm::vec3(1.0f, 1.0f, 1.0f),
+		0.0f, 1.0f);
+
+	ThrowableEntity::get().draw();
+	for (int i = 0; i < this->entities.size(); ++i)
+		this->entities[i]->draw();
+
 	Renderer::get().draw(500.0f, 500.0f, 100.0f, 100.0f, 0.0f, "throwablePrimitive", "test2", glm::vec3(1.0f, 1.0f, 1.0f), 0.9f, 1.0f);
 
 	// glutSwapBuffers();

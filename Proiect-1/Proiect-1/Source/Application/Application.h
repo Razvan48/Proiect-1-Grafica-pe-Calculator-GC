@@ -1,5 +1,10 @@
 #pragma once
 
+#include <vector>
+#include <memory>
+
+#include "../Entity/Entity.h"
+
 class Application
 {
 private:
@@ -18,6 +23,8 @@ private:
 
 	static void drawWrapper();
 	static void releaseResourcesWrapper();
+
+	std::vector<std::shared_ptr<Entity>> entities;
 
 public:
 	static Application& get();
