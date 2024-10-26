@@ -21,3 +21,6 @@ int main(int argc, char* argv[])
 
 // interactiune bila <-> pasari
 // cade o pasare cand e lovita de bila
+// ciclu zi-noapte folosind blending?
+
+
