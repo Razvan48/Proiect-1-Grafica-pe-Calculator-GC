@@ -64,7 +64,7 @@ void Application::draw(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// TODO: draw
-	Renderer::get().draw(500.0f, 500.0f, 100.0f, 100.0f, 0.0f, "test2", glm::vec3(1.0f, 1.0f, 1.0f), 0.1f);
+	Renderer::get().draw(500.0f, 500.0f, 100.0f, 100.0f, 0.0f, "throwablePrimitive", "test2", glm::vec3(1.0f, 1.0f, 1.0f), 0.9f, 1.0f);
 
 	// glutSwapBuffers();
 

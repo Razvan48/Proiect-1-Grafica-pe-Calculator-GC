@@ -4,7 +4,8 @@ in vec2 textureCoord;
 
 uniform sampler2D textureSampler2D;
 uniform vec4 color;
-uniform float blendFactor;
+uniform float textureBlendFactor;
+uniform float backgroundBlendFactor;
 
 out vec4 fragmentColor;
 
@@ -12,9 +13,10 @@ void main()
 {
     vec4 textureColor = texture(textureSampler2D, textureCoord);
 
-    if (textureColor.a == 0.0) // canalul alpha rgba
+    if (textureColor.a == 0.0f) // canalul alpha rgba
 		discard;
 
-    fragmentColor = mix(textureColor, color, blendFactor);
+    fragmentColor = mix(textureColor, color, textureBlendFactor);
+    fragmentColor.a = backgroundBlendFactor;
 }
 

@@ -178,7 +178,9 @@ xcopy /y /d "$(ProjectDir)lib\x64\SOIL\*.dll" "$(OutDir)" &amp;</Command>
     <ClCompile Include="include\glm\detail\glm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\Application\Application.cpp" />
+    <ClCompile Include="Source\Entity\BirdEntity\BirdEntity.cpp" />
     <ClCompile Include="Source\Entity\Entity.cpp" />
+    <ClCompile Include="Source\Entity\ThrowableEntity\ThrowableEntity.cpp" />
     <ClCompile Include="Source\Renderer\Renderer.cpp" />
     <ClCompile Include="Source\TextureManager\TextureManager.cpp" />
     <ClCompile Include="Source\WindowManager\WindowManager.cpp" />
@@ -485,7 +487,9 @@ xcopy /y /d "$(ProjectDir)lib\x64\SOIL\*.dll" "$(OutDir)" &amp;</Command>
     <ClInclude Include="include\loadShaders.h" />
     <ClInclude Include="include\SOIL.h" />
     <ClInclude Include="Source\Application\Application.h" />
+    <ClInclude Include="Source\Entity\BirdEntity\BirdEntity.h" />
     <ClInclude Include="Source\Entity\Entity.h" />
+    <ClInclude Include="Source\Entity\ThrowableEntity\ThrowableEntity.h" />
     <ClInclude Include="Source\Renderer\Renderer.h" />
     <ClInclude Include="Source\TextureManager\TextureManager.h" />
     <ClInclude Include="Source\WindowManager\WindowManager.h" />

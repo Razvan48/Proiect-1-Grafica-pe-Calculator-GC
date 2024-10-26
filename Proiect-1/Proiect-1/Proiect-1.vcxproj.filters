@@ -100,6 +100,12 @@
     <Filter Include="Source Files\Source\Entity">
       <UniqueIdentifier>{f4d32227-60ec-4f80-8ad5-0a51352e5a87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Source\Entity\BirdEntity">
+      <UniqueIdentifier>{8fbd3ba3-dc7b-455f-af92-6e8e791a724b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Source\Entity\ThrowableEntity">
+      <UniqueIdentifier>{f0aa2073-da90-4973-9f79-4ae3779bf464}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -131,6 +137,12 @@
     </ClCompile>
     <ClCompile Include="Source\Entity\Entity.cpp">
       <Filter>Source Files\Source\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity\BirdEntity\BirdEntity.cpp">
+      <Filter>Source Files\Source\Entity\BirdEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity\ThrowableEntity\ThrowableEntity.cpp">
+      <Filter>Source Files\Source\Entity\ThrowableEntity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1039,6 +1051,12 @@
     </ClInclude>
     <ClInclude Include="Source\Entity\Entity.h">
       <Filter>Source Files\Source\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity\BirdEntity\BirdEntity.h">
+      <Filter>Source Files\Source\Entity\BirdEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity\ThrowableEntity\ThrowableEntity.h">
+      <Filter>Source Files\Source\Entity\ThrowableEntity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
