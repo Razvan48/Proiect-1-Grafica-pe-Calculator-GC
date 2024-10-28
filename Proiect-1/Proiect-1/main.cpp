@@ -16,11 +16,14 @@ int main(int argc, char* argv[])
 // sky singleton, mosteneste entity, similar cu throwable
 // logica pt throwable, dupa click devine statusul IN_AIR, se misca, opacitate 1.0f (nu mai e transparenta)
 // pasari
+// global clock
 
 
 
 // interactiune bila <-> pasari
 // cade o pasare cand e lovita de bila
 // ciclu zi-noapte folosind blending?
+
+// de simplificat inputManager (se poate)
 
 

@@ -5,8 +5,8 @@
 
 #include <iostream>
 
-InputManager::InputManager()
-	: leftMouseButtonUp(true), leftMouseButtonUpLastTime(true), currentMouseX(0), currentMouseY(0)
+InputManager::InputManager(bool leftMouseButtonUp, bool leftMouseButtonLastTime, int currentMouseX, int currentMouseY)
+	: leftMouseButtonUp(leftMouseButtonUp), leftMouseButtonUpLastTime(leftMouseButtonUpLastTime), currentMouseX(currentMouseX), currentMouseY(currentMouseY)
 {
 	glutMouseFunc(mouseFuncWrapper);
 	glutPassiveMotionFunc(motionFuncWrapper);
@@ -15,7 +15,7 @@ InputManager::InputManager()
 
 InputManager& InputManager::get()
 {
-	static InputManager instance;
+	static InputManager instance(true, true, 0, 0);
 	return instance;
 }
 

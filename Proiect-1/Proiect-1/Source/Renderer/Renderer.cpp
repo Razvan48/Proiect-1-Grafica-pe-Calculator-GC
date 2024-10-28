@@ -237,7 +237,7 @@ Renderer& Renderer::get()
 	return instance;
 }
 
-void Renderer::draw(GLfloat posCenterX, GLfloat posCenterY, GLfloat width, GLfloat height, GLfloat rotateAngle, const std::string& primitiveName, const std::string& textureName2D, glm::vec3 color, float textureBlendFactor, float backgroundBlendFactor)
+void Renderer::draw(GLfloat posCenterX, GLfloat posCenterY, float width, float height, GLfloat rotateAngle, const std::string& primitiveName, const std::string& textureName2D, glm::vec3 color, float textureBlendFactor, float backgroundBlendFactor)
 {
 	if (this->primitives.find(primitiveName) == this->primitives.end())
 	{

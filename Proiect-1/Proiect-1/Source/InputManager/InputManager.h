@@ -3,7 +3,7 @@
 class InputManager
 {
 private:
-	InputManager();
+	InputManager(bool leftMouseButtonUp, bool leftMouseButtonUpLastTime, int currentMouseX, int currentMouseY);
 	~InputManager();
 	InputManager(const InputManager& other) = delete;
 	InputManager& operator= (const InputManager& other) = delete;

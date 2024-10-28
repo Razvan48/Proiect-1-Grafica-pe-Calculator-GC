@@ -15,11 +15,14 @@ private:
 	WindowManager(const WindowManager&& other) = delete;
 	WindowManager& operator= (const WindowManager&& other) = delete;
 
-	const int WINDOW_WIDTH;
-	const int WINDOW_HEIGHT;
+	int WINDOW_WIDTH;
+	int WINDOW_HEIGHT;
 	const std::string WINDOW_TITLE;
-	const int WINDOW_POS_X;
-	const int WINDOW_POS_Y;
+	int WINDOW_POS_X;
+	int WINDOW_POS_Y;
+
+	static void reshapeFuncWrapper(int width, int height);
+	void reshapeFunc(int width, int height);
 
 public:
 	static WindowManager& get();
