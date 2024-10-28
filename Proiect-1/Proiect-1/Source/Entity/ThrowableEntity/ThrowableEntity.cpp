@@ -19,8 +19,8 @@ ThrowableEntity& ThrowableEntity::get()
 	static ThrowableEntity
 		instance(WindowManager::get().getWindowWidth() / 2.0f,
 			-WindowManager::get().getWindowHeight() / 16.0f,
-			glm::vec2(0.0f, 0.0f), 0.0f, "test2",
-			glm::vec3(1.0f, 1.0f, 0.0f), 0.5f, 0.5f,
+			glm::vec2(0.0f, 0.0f), 0.0f, "rockTexture",
+			glm::vec3(1.0f, 1.0f, 1.0f), 0.0f, 0.5f,
 			WindowManager::get().getWindowWidth() / 4.0f,
 			WindowManager::get().getWindowWidth() / 2.0f,
 			-WindowManager::get().getWindowHeight() / 16.0f,

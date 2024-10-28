@@ -62,9 +62,11 @@ void TextureManager::loadTexture(const std::string& textureName, const std::stri
 
 void TextureManager::loadResources()
 {
-	this->loadTexture("test", "Assets/Textures/test.png");
-	this->loadTexture("test2", "Assets/Textures/test2.png");
-	this->loadTexture("backgroundTexture", "Assets/Textures/background.png");
+	this->loadTexture("test0Texture", "Assets/Textures/test0Texture.png");
+	this->loadTexture("test1Texture", "Assets/Textures/test1Texture.png");
+	this->loadTexture("backgroundTexture", "Assets/Textures/backgroundTexture.png");
+	this->loadTexture("rockTexture", "Assets/Textures/rockTexture.png");
+	this->loadTexture("birdTexture", "Assets/Textures/birdTexture.png");
 }
 
 GLuint TextureManager::getTexture(const std::string& textureName)

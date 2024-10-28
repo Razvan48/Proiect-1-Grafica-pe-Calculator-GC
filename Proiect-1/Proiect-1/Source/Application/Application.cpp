@@ -95,7 +95,7 @@ void Application::draw(void)
 	ThrowableEntity::get().draw();
 
 	// TEST: TODO: delete after testing
-	Renderer::get().draw(500.0f, 500.0f, 100.0f, 100.0f, 0.0f, "throwablePrimitive", "test2", glm::vec3(1.0f, 1.0f, 1.0f), 0.9f, 1.0f);
+	Renderer::get().draw(500.0f, 500.0f, 100.0f, 100.0f, 0.0f, "throwablePrimitive", "test1Texture", glm::vec3(1.0f, 1.0f, 1.0f), 0.9f, 1.0f);
 
 	// glutSwapBuffers();
 
