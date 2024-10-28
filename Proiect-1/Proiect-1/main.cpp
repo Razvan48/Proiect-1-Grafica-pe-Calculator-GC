@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
 }
 
 // TODO: refactoring
+// TODO: chestii mai random, mai mult random
 
 
 

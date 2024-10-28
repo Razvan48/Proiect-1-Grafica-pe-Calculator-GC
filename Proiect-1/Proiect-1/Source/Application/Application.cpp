@@ -32,12 +32,12 @@ Application::Application(int NUM_BIRDS)
 			250.0f,
 			BirdEntity::Status::FLYING,
 			0.1f,
-			WindowManager::get().getWindowWidth() / 2.0f + RandomGenerator::randomUniformDouble(-50.0, 50.0), // x elipsa
-			WindowManager::get().getWindowHeight() / 2.0f + RandomGenerator::randomUniformDouble(-50.0, 50.0), // y elipsa
-			WindowManager::get().getWindowWidth() / 3.0f + RandomGenerator::randomUniformDouble(-50.0, 50.0), // a elipsa
-			WindowManager::get().getWindowHeight() / 3.0f + RandomGenerator::randomUniformDouble(-50.0, 50.0), // b elipsa
-			100.0f, // speed scalar
-			RandomGenerator::randomUniformDouble(0.0, 360.0),
+			WindowManager::get().getWindowWidth() / 2.0f + RandomGenerator::randomUniformDouble(-150.0, 150.0), // x elipsa
+			WindowManager::get().getWindowHeight() / 2.0f + RandomGenerator::randomUniformDouble(-150.0, 150.0), // y elipsa
+			WindowManager::get().getWindowWidth() / 3.0f + RandomGenerator::randomUniformDouble(-150.0, 150.0), // a elipsa
+			WindowManager::get().getWindowHeight() / 3.0f + RandomGenerator::randomUniformDouble(-150.0, 150.0), // b elipsa
+			100.0f + RandomGenerator::randomUniformDouble(-50.0, 50.0), // speed scalar
+			RandomGenerator::randomUniformDouble(0.0, 360.0), // offset pentru start pe elipsa
 			0.0f, 0.0f
 		));
 	}
