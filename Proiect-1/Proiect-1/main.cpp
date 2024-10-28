@@ -12,14 +12,7 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-// TODO:
-// logica pt throwable, dupa click devine statusul IN_AIR, se misca, opacitate 1.0f (nu mai e transparenta)
-// pasari
-// interactiune bila <-> pasari
-// cade o pasare cand e lovita de bila
-
-
-// (DONE?) ciclu zi-noapte folosind blending?
+// TODO: refactoring
 
 
 
