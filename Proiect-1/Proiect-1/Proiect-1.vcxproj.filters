@@ -115,6 +115,9 @@
     <Filter Include="Source Files\Source\GlobalClock">
       <UniqueIdentifier>{d4875de4-0d20-4fa9-b4a6-7c217292772a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Source\RandomGenerator">
+      <UniqueIdentifier>{a1a2d327-d0ba-465f-98c4-a00c2d22e262}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -161,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="Source\GlobalClock\GlobalClock.cpp">
       <Filter>Source Files\Source\GlobalClock</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RandomGenerator\RandomGenerator.cpp">
+      <Filter>Source Files\Source\RandomGenerator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1084,6 +1090,9 @@
     </ClInclude>
     <ClInclude Include="Source\GlobalClock\GlobalClock.h">
       <Filter>Source Files\Source\GlobalClock</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RandomGenerator\RandomGenerator.h">
+      <Filter>Source Files\Source\RandomGenerator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -184,6 +184,7 @@ xcopy /y /d "$(ProjectDir)lib\x64\SOIL\*.dll" "$(OutDir)" &amp;</Command>
     <ClCompile Include="Source\Entity\ThrowableEntity\ThrowableEntity.cpp" />
     <ClCompile Include="Source\GlobalClock\GlobalClock.cpp" />
     <ClCompile Include="Source\InputManager\InputManager.cpp" />
+    <ClCompile Include="Source\RandomGenerator\RandomGenerator.cpp" />
     <ClCompile Include="Source\Renderer\Renderer.cpp" />
     <ClCompile Include="Source\TextureManager\TextureManager.cpp" />
     <ClCompile Include="Source\WindowManager\WindowManager.cpp" />
@@ -496,6 +497,7 @@ xcopy /y /d "$(ProjectDir)lib\x64\SOIL\*.dll" "$(OutDir)" &amp;</Command>
     <ClInclude Include="Source\Entity\ThrowableEntity\ThrowableEntity.h" />
     <ClInclude Include="Source\GlobalClock\GlobalClock.h" />
     <ClInclude Include="Source\InputManager\InputManager.h" />
+    <ClInclude Include="Source\RandomGenerator\RandomGenerator.h" />
     <ClInclude Include="Source\Renderer\Renderer.h" />
     <ClInclude Include="Source\TextureManager\TextureManager.h" />
     <ClInclude Include="Source\WindowManager\WindowManager.h" />
