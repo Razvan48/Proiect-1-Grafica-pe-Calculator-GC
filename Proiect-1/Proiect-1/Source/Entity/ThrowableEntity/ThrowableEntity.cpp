@@ -6,10 +6,10 @@
 
 #include <iostream>
 
-ThrowableEntity::ThrowableEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float radius, GLfloat initialPosX, GLfloat initialPosY, ThrowableEntity::Status status)
+ThrowableEntity::ThrowableEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float radius, GLfloat initialPosX, GLfloat initialPosY, ThrowableEntity::Status status, const std::string& primitiveName)
 	: Entity(posCenterX, posCenterY, speed, rotateAngle, textureName
 		, color, textureBlendFactor, backgroundBlendFactor)
-	, radius(radius), initialPosX(initialPosX), initialPosY(initialPosY), status(status)
+	, radius(radius), initialPosX(initialPosX), initialPosY(initialPosY), status(status), primitiveName(primitiveName)
 {
 
 }
@@ -24,7 +24,7 @@ ThrowableEntity& ThrowableEntity::get()
 			WindowManager::get().getWindowWidth() / 4.0f,
 			WindowManager::get().getWindowWidth() / 2.0f,
 			-WindowManager::get().getWindowHeight() / 16.0f,
-			ThrowableEntity::Status::IN_HAND);
+			ThrowableEntity::Status::IN_HAND, "throwablePrimitive");
 	return instance;
 }
 
@@ -39,7 +39,7 @@ void ThrowableEntity::draw()
 		this->posCenterX, this->posCenterY,
 		2.0f * this->radius, 2.0f * this->radius,
 		this->rotateAngle,
-		"throwablePrimitive",
+		this->primitiveName,
 		this->textureName,
 		color,
 		textureBlendFactor,
@@ -53,7 +53,7 @@ void ThrowableEntity::update()
 	{
 		this->posCenterX = InputManager::get().getCurrentMouseX();
 
-		bool recentlyMouseUp = InputManager::get().recentlyMouseUp();
+		bool recentlyMouseUp = InputManager::get().getLeftMouseButtonUp();
 		if (recentlyMouseUp)
 		{
 			std::cout << "RELEASED" << std::endl;

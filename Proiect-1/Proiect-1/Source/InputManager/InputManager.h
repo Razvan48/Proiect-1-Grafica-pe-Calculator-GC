@@ -3,7 +3,7 @@
 class InputManager
 {
 private:
-	InputManager(bool leftMouseButtonUp, bool leftMouseButtonUpLastTime, int currentMouseX, int currentMouseY);
+	InputManager(bool leftMouseButtonUp, bool leftMouseButtonHold, int currentMouseX, int currentMouseY);
 	~InputManager();
 	InputManager(const InputManager& other) = delete;
 	InputManager& operator= (const InputManager& other) = delete;
@@ -16,7 +16,7 @@ private:
 	void motionFunc(int x, int y);
 
 	bool leftMouseButtonUp;
-	bool leftMouseButtonUpLastTime;
+	bool leftMouseButtonHold;
 	int currentMouseX;
 	int currentMouseY;
 
@@ -26,5 +26,5 @@ public:
 
 	inline int getCurrentMouseX() const { return this->currentMouseX; }
 	inline int getCurrentMouseY() const { return this->currentMouseY; }
-	inline bool recentlyMouseUp() const { return (!this->leftMouseButtonUpLastTime) && this->leftMouseButtonUp; }
+	inline bool getLeftMouseButtonUp() const { return this->leftMouseButtonUp; }
 };

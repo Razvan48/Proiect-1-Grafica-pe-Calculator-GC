@@ -10,10 +10,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-BackgroundEntity::BackgroundEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float width, float height)
+BackgroundEntity::BackgroundEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float width, float height, const std::string& primitiveName)
 	: Entity(posCenterX, posCenterY, speed, rotateAngle, textureName
 		, color, textureBlendFactor, backgroundBlendFactor)
-	, width(width), height(height)
+	, width(width), height(height), primitiveName(primitiveName)
 {
 
 }
@@ -35,7 +35,8 @@ BackgroundEntity& BackgroundEntity::get()
 		0.0f,
 		1.0f,
 		1.0f * WindowManager::get().getWindowWidth(),
-		1.0f * WindowManager::get().getWindowHeight()
+		1.0f * WindowManager::get().getWindowHeight(),
+		"backgroundPrimitive"
 	);
 	return instance;
 }
@@ -46,7 +47,7 @@ void BackgroundEntity::draw()
 		this->posCenterX, this->posCenterY,
 		this->width, this->height,
 		this->rotateAngle,
-		"backgroundPrimitive",
+		this->primitiveName,
 		this->textureName,
 		this->color,
 		this->textureBlendFactor,

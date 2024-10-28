@@ -5,10 +5,12 @@
 
 #include "../Entity.h"
 
+#include <string>
+
 class BackgroundEntity : virtual public Entity
 {
 protected:
-	BackgroundEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float width, float height);
+	BackgroundEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float width, float height, const std::string& primitiveName);
 	virtual ~BackgroundEntity();
 	BackgroundEntity(const BackgroundEntity& other) = delete;
 	BackgroundEntity& operator= (const BackgroundEntity& other) = delete;
@@ -17,6 +19,8 @@ protected:
 
 	float width;
 	float height;
+
+	std::string primitiveName;
 
 public:
 	static BackgroundEntity& get();

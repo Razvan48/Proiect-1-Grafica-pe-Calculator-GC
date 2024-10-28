@@ -21,7 +21,6 @@ int main(int argc, char* argv[])
 
 // (DONE?) ciclu zi-noapte folosind blending?
 
-// de simplificat inputManager (se poate)
-// de mutat primitive name in entitati
+
 
 

@@ -5,8 +5,8 @@
 
 #include <iostream>
 
-InputManager::InputManager(bool leftMouseButtonUp, bool leftMouseButtonLastTime, int currentMouseX, int currentMouseY)
-	: leftMouseButtonUp(leftMouseButtonUp), leftMouseButtonUpLastTime(leftMouseButtonUpLastTime), currentMouseX(currentMouseX), currentMouseY(currentMouseY)
+InputManager::InputManager(bool leftMouseButtonUp, bool leftMouseButtonHold, int currentMouseX, int currentMouseY)
+	: leftMouseButtonUp(leftMouseButtonUp), leftMouseButtonHold(leftMouseButtonHold), currentMouseX(currentMouseX), currentMouseY(currentMouseY)
 {
 	glutMouseFunc(mouseFuncWrapper);
 	glutPassiveMotionFunc(motionFuncWrapper);
@@ -15,7 +15,7 @@ InputManager::InputManager(bool leftMouseButtonUp, bool leftMouseButtonLastTime,
 
 InputManager& InputManager::get()
 {
-	static InputManager instance(true, true, 0, 0);
+	static InputManager instance(false, false, 0, 0);
 	return instance;
 }
 
@@ -40,13 +40,13 @@ void InputManager::mouseFunc(int button, int state, int x, int y)
 	{
 		if (state == GLUT_UP)
 		{
-			this->leftMouseButtonUpLastTime = this->leftMouseButtonUp;
 			this->leftMouseButtonUp = true;
+			this->leftMouseButtonHold = false;
 		}
 		else if (state == GLUT_DOWN)
 		{
-			this->leftMouseButtonUpLastTime = this->leftMouseButtonUp;
 			this->leftMouseButtonUp = false;
+			this->leftMouseButtonHold = true;
 		}
 	}
 }
@@ -59,6 +59,5 @@ void InputManager::motionFunc(int x, int y)
 
 void InputManager::update()
 {
-	this->leftMouseButtonUpLastTime = this->leftMouseButtonUp;
 	this->leftMouseButtonUp = false;
 }
