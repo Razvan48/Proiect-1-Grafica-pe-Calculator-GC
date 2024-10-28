@@ -3,13 +3,16 @@
 #include "../../WindowManager/WindowManager.h"
 #include "../../Renderer/Renderer.h"
 #include "../../InputManager/InputManager.h"
+#include "../../GlobalClock/GlobalClock.h"
 
 #include <iostream>
 
-ThrowableEntity::ThrowableEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float radius, GLfloat initialPosX, GLfloat initialPosY, ThrowableEntity::Status status, const std::string& primitiveName)
+ThrowableEntity::ThrowableEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float radius, float initialRadius, GLfloat initialPosX, GLfloat initialPosY, ThrowableEntity::Status status, const std::string& primitiveName, float launchTime, float launchDuration, float currentInitialLaunchSpeed)
 	: Entity(posCenterX, posCenterY, speed, rotateAngle, textureName
 		, color, textureBlendFactor, backgroundBlendFactor)
-	, radius(radius), initialPosX(initialPosX), initialPosY(initialPosY), status(status), primitiveName(primitiveName)
+	, radius(radius), initialRadius(initialRadius), initialPosX(initialPosX), initialPosY(initialPosY)
+	, status(status), primitiveName(primitiveName), launchTime(launchTime)
+	, launchDuration(launchDuration), currentInitialLaunchSpeed(currentInitialLaunchSpeed)
 {
 
 }
@@ -21,10 +24,11 @@ ThrowableEntity& ThrowableEntity::get()
 			-WindowManager::get().getWindowHeight() / 16.0f,
 			glm::vec2(0.0f, 0.0f), 0.0f, "rockTexture",
 			glm::vec3(1.0f, 1.0f, 1.0f), 0.0f, 0.5f,
-			WindowManager::get().getWindowWidth() / 4.0f,
+			WindowManager::get().getWindowWidth() / 8.0f,
+			WindowManager::get().getWindowWidth() / 8.0f,
 			WindowManager::get().getWindowWidth() / 2.0f,
 			-WindowManager::get().getWindowHeight() / 16.0f,
-			ThrowableEntity::Status::IN_HAND, "throwablePrimitive");
+			ThrowableEntity::Status::IN_HAND, "throwablePrimitive", 0.0f, 1.0f, 0.0f);
 	return instance;
 }
 
@@ -41,9 +45,9 @@ void ThrowableEntity::draw()
 		this->rotateAngle,
 		this->primitiveName,
 		this->textureName,
-		color,
-		textureBlendFactor,
-		backgroundBlendFactor
+		this->color,
+		this->textureBlendFactor,
+		this->backgroundBlendFactor
 	);
 }
 
@@ -53,20 +57,52 @@ void ThrowableEntity::update()
 	{
 		this->posCenterX = InputManager::get().getCurrentMouseX();
 
-		bool recentlyMouseUp = InputManager::get().getLeftMouseButtonUp();
-		if (recentlyMouseUp)
+		bool leftMouseButtonUp = InputManager::get().getLeftMouseButtonUp();
+		if (leftMouseButtonUp)
 		{
 			std::cout << "RELEASED" << std::endl;
 			std::cout << InputManager::get().getCurrentMouseX() << " " << InputManager::get().getCurrentMouseY() << std::endl;
+
+			this->status = ThrowableEntity::Status::IN_AIR;
+			this->backgroundBlendFactor = 1.0f;
+			this->launchTime = GlobalClock::get().getCurrentTime();
+
+			this->currentInitialLaunchSpeed = 4.0f * (InputManager::get().getCurrentMouseY() - this->initialPosY) / this->launchDuration;
+			this->speed.y = this->currentInitialLaunchSpeed;
 		}
 	}
 	else if (this->status == ThrowableEntity::Status::IN_AIR)
 	{
+		if (GlobalClock::get().getCurrentTime() - this->launchTime > this->launchDuration)
+		{
+			this->status = ThrowableEntity::Status::IN_HAND;
+			this->backgroundBlendFactor = 0.5f;
+			this->posCenterX = this->initialPosX;
+			this->posCenterY = this->initialPosY;
+			this->radius = this->initialRadius;
 
+			this->currentInitialLaunchSpeed = 0.0f;
+
+			this->speed.y = 0.0f;
+		}
+		else
+		{
+			float timeSinceLaunch = GlobalClock::get().getCurrentTime() - this->launchTime;
+
+			this->radius = this->initialRadius *
+				std::max((1.0f - 2.0f * (timeSinceLaunch / this->launchDuration) * (timeSinceLaunch / this->launchDuration)), 0.0f); // INFO: 2.0f e hardcodat
+
+			this->speed.y -= 2.0f * (this->currentInitialLaunchSpeed / this->launchDuration) * GlobalClock::get().getDeltaTime();
+
+			this->posCenterY += this->speed.y * GlobalClock::get().getDeltaTime();
+		}
 	}
 	else
 	{
 		std::cout << "Error: ThrowableEntity: update(): invalid status" << std::endl;
 	}
+
+	// TODO:
+	this->initialRadius = WindowManager::get().getWindowWidth() / 4.0f;
 }
 

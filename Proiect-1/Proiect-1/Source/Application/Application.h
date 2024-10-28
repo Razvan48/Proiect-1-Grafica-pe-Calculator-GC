@@ -8,7 +8,7 @@
 class Application
 {
 private:
-	Application();
+	Application(int NUM_BIRDS);
 	~Application();
 	Application(const Application& other) = delete;
 	Application& operator= (const Application& other) = delete;
@@ -25,6 +25,8 @@ private:
 	static void releaseResourcesWrapper();
 
 	std::vector<std::shared_ptr<Entity>> entities;
+
+	const int NUM_BIRDS;
 
 public:
 	static Application& get();

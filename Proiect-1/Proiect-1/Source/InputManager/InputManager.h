@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../WindowManager/WindowManager.h"
+
 class InputManager
 {
 private:
@@ -25,6 +27,6 @@ public:
 	void update();
 
 	inline int getCurrentMouseX() const { return this->currentMouseX; }
-	inline int getCurrentMouseY() const { return this->currentMouseY; }
+	inline int getCurrentMouseY() const { return 1.0f * WindowManager::get().getWindowHeight() - this->currentMouseY; }
 	inline bool getLeftMouseButtonUp() const { return this->leftMouseButtonUp; }
 };
