@@ -1,8 +1,14 @@
 #include "BackgroundEntity.h"
 
-#include "../../WindowManager/WindowManager.h"
+#include <iostream>
 
+#include "../../WindowManager/WindowManager.h"
 #include "../../Renderer/Renderer.h"
+#include "../../GlobalClock/GlobalClock.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 BackgroundEntity::BackgroundEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float width, float height)
 	: Entity(posCenterX, posCenterY, speed, rotateAngle, textureName
@@ -25,9 +31,9 @@ BackgroundEntity& BackgroundEntity::get()
 		glm::vec2(0.0f, 0.0f),
 		0.0f,
 		"backgroundTexture",
-		glm::vec3(1.0f, 1.0f, 1.0f),
-		0.5f,
-		0.5f,
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		0.0f,
+		1.0f,
 		1.0f * WindowManager::get().getWindowWidth(),
 		1.0f * WindowManager::get().getWindowHeight()
 	);
@@ -54,4 +60,6 @@ void BackgroundEntity::update()
 	this->posCenterY = WindowManager::get().getWindowHeight() / 2.0f;
 	this->width = 1.0f * WindowManager::get().getWindowWidth();
 	this->height = 1.0f * WindowManager::get().getWindowHeight();
+
+	this->textureBlendFactor = std::min((1.0f + glm::sin(100.0f * glm::radians(GlobalClock::get().getCurrentTime()))) / 2.0f, 0.75f);
 }
