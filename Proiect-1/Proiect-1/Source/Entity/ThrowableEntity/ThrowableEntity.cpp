@@ -90,11 +90,13 @@ void ThrowableEntity::update()
 			float timeSinceLaunch = GlobalClock::get().getCurrentTime() - this->launchTime;
 
 			this->radius = this->initialRadius *
-				std::max((1.0f - 2.0f * (timeSinceLaunch / this->launchDuration) * (timeSinceLaunch / this->launchDuration)), 0.0f); // INFO: 2.0f e hardcodat
+				std::max((1.0f - (timeSinceLaunch / this->launchDuration) * (timeSinceLaunch / this->launchDuration)), 0.0f); // INFO: 2.0f e hardcodat
 
 			this->speed.y -= 2.0f * (this->currentInitialLaunchSpeed / this->launchDuration) * GlobalClock::get().getDeltaTime();
 
 			this->posCenterY += this->speed.y * GlobalClock::get().getDeltaTime();
+
+			this->rotateAngle = 500.0f * GlobalClock::get().getCurrentTime();
 		}
 	}
 	else
