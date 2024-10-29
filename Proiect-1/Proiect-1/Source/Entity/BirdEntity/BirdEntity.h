@@ -59,4 +59,5 @@ public:
 	virtual void update() override;
 
 	inline float getGravity() const { return this->gravity; }
+	inline BirdEntity::Status getStatus() const { return this->status; }
 };

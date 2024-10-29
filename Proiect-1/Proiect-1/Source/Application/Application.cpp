@@ -13,6 +13,8 @@
 
 #include "../GlobalClock/GlobalClock.h"
 
+#include <iostream>
+
 Application::Application()
 	: NUM_BIRDS(20)
 {
@@ -79,6 +81,19 @@ void Application::update()
 
 	for (int i = 0; i < this->entities.size(); ++i)
 		this->entities[i]->update();
+
+	for (int i = 0; i < this->entities.size(); ++i)
+	{
+		if (std::dynamic_pointer_cast<BirdEntity>(this->entities[i])
+			&& std::dynamic_pointer_cast<BirdEntity>(this->entities[i])->getStatus() == BirdEntity::Status::FALLING
+			&& std::dynamic_pointer_cast<BirdEntity>(this->entities[i])->getPosCenterY() < -5.0f * WindowManager::get().getWindowHeight())
+		{
+			std::swap(this->entities[i], this->entities.back());
+			this->entities.pop_back();
+			--i;
+		}
+	}
+	std::cout << "Number of entities: " << this->entities.size() << std::endl;
 
 	ThrowableEntity::get().update();
 
