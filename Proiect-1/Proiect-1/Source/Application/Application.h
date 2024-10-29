@@ -8,7 +8,7 @@
 class Application
 {
 private:
-	Application(int NUM_BIRDS);
+	Application();
 	~Application();
 	Application(const Application& other) = delete;
 	Application& operator= (const Application& other) = delete;

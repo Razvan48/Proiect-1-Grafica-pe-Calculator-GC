@@ -1,10 +1,9 @@
 #include "BirdEntity.h"
 
 #include "../../Renderer/Renderer.h"
-
 #include "../../GlobalClock/GlobalClock.h"
-
 #include "../ThrowableEntity/ThrowableEntity.h"
+#include "../../RandomGenerator/RandomGenerator.h"
 
 BirdEntity::BirdEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float width, float height, const std::string& primitiveName, float gravity, const BirdEntity::Status& status, float collisionEpsilon, float centerXEllipse, float centerYEllipse, float aEllipse, float bEllipse, float speedScalar, float timeOffset, float currentWidth, float currentHeight)
 	: Entity(posCenterX, posCenterY, speed, rotateAngle, textureName
@@ -15,6 +14,10 @@ BirdEntity::BirdEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& 
 	, centerXEllipse(centerXEllipse), centerYEllipse(centerYEllipse)
 	, aEllipse(aEllipse), bEllipse(bEllipse), speedScalar(speedScalar)
 	, timeOffset(timeOffset), currentWidth(currentWidth), currentHeight(currentHeight)
+	, rotationDirectionFlying(2 * RandomGenerator::randomUniformInt(0, 1) - 1), rotationDirectionFalling(2 * RandomGenerator::randomUniformInt(0, 1) - 1)
+	, ellipseScale(1.0f), ellipseSpeedScale(0.01f)
+	, MAX_STORED_POSITIONS(10), totalNumPositions(0)
+	, lastTimeAddedStoredPosition(0.0f), timeBetweenStoredPositions(0.065f)
 {
 
 }
@@ -26,6 +29,25 @@ BirdEntity::~BirdEntity()
 
 void BirdEntity::draw()
 {
+	int count = 0;
+	int currentStoredPositionsSize = this->storedPositions.size();
+	for (auto& it : this->storedPositions)
+	{
+		// draw
+		Renderer::get().draw(
+			it.second.x, it.second.y,
+			5.0f, 5.0f, // size
+			0.0f, // rotate angle
+			"throwablePrimitive",
+			"rockTexture", // nu prea conteaza
+			glm::vec3(1.0f, 1.0f, 1.0f),
+			1.0f,
+			1.0f * (count + 1) / currentStoredPositionsSize
+		);
+
+		++count;
+	}
+
 	Renderer::get().draw(
 		this->posCenterX, this->posCenterY,
 		this->currentWidth, this->currentHeight,
@@ -59,7 +81,7 @@ void BirdEntity::update()
 		this->posCenterX += this->speed.x * GlobalClock::get().getDeltaTime();
 		this->posCenterY += this->speed.y * GlobalClock::get().getDeltaTime();
 
-		this->rotateAngle = 100.0f * GlobalClock::get().getCurrentTime();
+		this->rotateAngle = 100.0f * this->rotationDirectionFalling * GlobalClock::get().getCurrentTime();
 	}
 
 	if (this->status == BirdEntity::Status::FLYING)
@@ -68,28 +90,49 @@ void BirdEntity::update()
 		{
 			float timeSinceLaunch = GlobalClock::get().getCurrentTime() - ThrowableEntity::get().getLaunchTime();
 
-			if (std::abs((ThrowableEntity::get().getLaunchDuration() / 2.0f) - timeSinceLaunch) < ThrowableEntity::get().getLaunchDuration() * this->collisionEpsilon)
+			if (std::abs((ThrowableEntity::get().getLaunchDuration() / 2.0f) - timeSinceLaunch) < ThrowableEntity::get().getLaunchDuration() * this->collisionEpsilon
+				&& this->isInCollisionWithThrowable())
 			{
-				if (this->isInCollisionWithThrowable())
-				{
-					this->status = BirdEntity::Status::FALLING;
-					// this->speed.y = 0.0f;
-					// this->speed.x = 0.0f;
-				}
+				this->status = BirdEntity::Status::FALLING;
+				// this->speed.y = 0.0f;
+				// this->speed.x = 0.0f;
 			}
+			else // bila e in aer, nu stim unde, dar pasarea nu a fost lovita
+			{
+				GLfloat targetPosX = ThrowableEntity::get().getTargetPosX();
+				GLfloat targetPosY = ThrowableEntity::get().getTargetPosY();
+
+				float distanceTargetX = targetPosX - this->posCenterX;
+				float distanceTargetY = targetPosY - this->posCenterY;
+
+				float crossProductSign = glm::sign(distanceTargetX * this->speed.y - this->speed.x * distanceTargetY);
+				float scaleSign = -1.0f * crossProductSign * this->rotationDirectionFlying;
+
+				// scaleSign = -1 = micsorare elipsa, scaleSign = 1 = marire elipsa
+				// -1 = micsoram ellipseScale
+				// 1 = marim ellipseScale
+				this->ellipseScale += scaleSign * this->ellipseSpeedScale * this->speedScalar * GlobalClock::get().getDeltaTime();
+			}
+		}
+		else // bila nu e in aer
+		{
+			if (this->ellipseScale > 1.0f)
+				this->ellipseScale = std::max(1.0f, this->ellipseScale - this->ellipseSpeedScale * this->speedScalar * GlobalClock::get().getDeltaTime());
+			else
+				this->ellipseScale = std::min(1.0f, this->ellipseScale + this->ellipseSpeedScale * this->speedScalar * GlobalClock::get().getDeltaTime());
 		}
 	}
 
 	if (this->status == BirdEntity::Status::FLYING)
 	{
-		this->posCenterX = this->centerXEllipse + this->aEllipse * glm::cos(glm::radians(this->timeOffset + this->speedScalar * GlobalClock::get().getCurrentTime()));
-		this->posCenterY = this->centerYEllipse + this->bEllipse * glm::sin(glm::radians(this->timeOffset + this->speedScalar * GlobalClock::get().getCurrentTime()));
+		this->posCenterX = this->centerXEllipse + this->ellipseScale * this->aEllipse * glm::cos(glm::radians(this->rotationDirectionFlying * (this->timeOffset + this->speedScalar * GlobalClock::get().getCurrentTime())));
+		this->posCenterY = this->centerYEllipse + this->ellipseScale * this->bEllipse * glm::sin(glm::radians(this->rotationDirectionFlying * (this->timeOffset + this->speedScalar * GlobalClock::get().getCurrentTime())));
 
 		float dX = this->posCenterX - this->centerXEllipse;
 		float dY = this->posCenterY - this->centerYEllipse;
 
-		float dXPerpendicular = -dY;
-		float dYPerpendicular = dX;
+		float dXPerpendicular = -dY * this->rotationDirectionFlying + dX * (this->ellipseScale - 1.0f);
+		float dYPerpendicular = dX * this->rotationDirectionFlying + dY * (this->ellipseScale - 1.0f);
 
 		float normPerpendicular = glm::sqrt(dXPerpendicular * dXPerpendicular + dYPerpendicular * dYPerpendicular);
 		float dXNormalizedPerpendicular = dXPerpendicular / normPerpendicular;
@@ -101,5 +144,14 @@ void BirdEntity::update()
 		this->speed.y = this->speedScalar * dYNormalizedPerpendicular;
 
 		this->currentWidth = this->width + 20.0f * glm::sin(glm::radians(10.0f * this->timeOffset + 10.0f * this->speedScalar * GlobalClock::get().getCurrentTime())); // INFO: valori hardcodate aici
+	}
+
+	if (GlobalClock::get().getCurrentTime() - this->lastTimeAddedStoredPosition > this->timeBetweenStoredPositions)
+	{
+		this->storedPositions[totalNumPositions++] = glm::vec2(this->posCenterX, this->posCenterY);
+		if (this->storedPositions.size() > this->MAX_STORED_POSITIONS)
+			this->storedPositions.erase(this->storedPositions.begin());
+
+		this->lastTimeAddedStoredPosition = GlobalClock::get().getCurrentTime();
 	}
 }

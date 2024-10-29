@@ -13,8 +13,8 @@
 
 #include "../GlobalClock/GlobalClock.h"
 
-Application::Application(int NUM_BIRDS)
-	: NUM_BIRDS(NUM_BIRDS)
+Application::Application()
+	: NUM_BIRDS(20)
 {
 	for (int i = 0; i < this->NUM_BIRDS; ++i)
 	{
@@ -50,7 +50,7 @@ Application::~Application()
 
 Application& Application::get()
 {
-	static Application instance(20);
+	static Application instance;
 	return instance;
 }
 

@@ -4,6 +4,7 @@
 #include "../../Renderer/Renderer.h"
 #include "../../InputManager/InputManager.h"
 #include "../../GlobalClock/GlobalClock.h"
+#include "../../RandomGenerator/RandomGenerator.h"
 
 #include <iostream>
 
@@ -12,7 +13,8 @@ ThrowableEntity::ThrowableEntity(GLfloat posCenterX, GLfloat posCenterY, const g
 		, color, textureBlendFactor, backgroundBlendFactor)
 	, radius(radius), initialRadius(initialRadius), initialPosX(initialPosX), initialPosY(initialPosY)
 	, status(status), primitiveName(primitiveName), launchTime(launchTime)
-	, launchDuration(launchDuration), currentInitialLaunchSpeed(currentInitialLaunchSpeed)
+	, launchDuration(launchDuration), currentInitialLaunchSpeed(currentInitialLaunchSpeed), rotationDirection(1)
+	, targetPosX(0.0f), targetPosY(0.0f)
 {
 
 }
@@ -60,10 +62,11 @@ void ThrowableEntity::update()
 		bool leftMouseButtonUp = InputManager::get().getLeftMouseButtonUp();
 		if (leftMouseButtonUp)
 		{
-			std::cout << "RELEASED" << std::endl;
-			std::cout << InputManager::get().getCurrentMouseX() << " " << InputManager::get().getCurrentMouseY() << std::endl;
+			this->targetPosX = InputManager::get().getCurrentMouseX();
+			this->targetPosY = InputManager::get().getCurrentMouseY();
 
 			this->status = ThrowableEntity::Status::IN_AIR;
+			this->rotationDirection = 2 * RandomGenerator::randomUniformInt(0, 1) - 1;
 			this->backgroundBlendFactor = 1.0f;
 			this->launchTime = GlobalClock::get().getCurrentTime();
 
@@ -96,7 +99,7 @@ void ThrowableEntity::update()
 
 			this->posCenterY += this->speed.y * GlobalClock::get().getDeltaTime();
 
-			this->rotateAngle = 500.0f * GlobalClock::get().getCurrentTime();
+			this->rotateAngle = 500.0f * this->rotationDirection * GlobalClock::get().getCurrentTime();
 		}
 	}
 	else

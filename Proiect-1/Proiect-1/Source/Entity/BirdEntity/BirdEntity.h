@@ -2,6 +2,7 @@
 
 #include "../Entity.h"
 
+#include <map>
 #include <string>
 
 class BirdEntity : virtual public Entity
@@ -37,6 +38,18 @@ protected:
 
 	float currentWidth;
 	float currentHeight;
+
+	int rotationDirectionFlying;
+	int rotationDirectionFalling;
+
+	float ellipseScale;
+	float ellipseSpeedScale;
+
+	int MAX_STORED_POSITIONS;
+	std::map<int, glm::vec2> storedPositions;
+	int totalNumPositions;
+	float lastTimeAddedStoredPosition;
+	float timeBetweenStoredPositions;
 
 public:
 	BirdEntity(GLfloat posCenterX, GLfloat posCenterY, const glm::vec2& speed, GLfloat rotateAngle, const std::string& textureName, const glm::vec3& color, float textureBlendFactor, float backgroundBlendFactor, float width, float height, const std::string& primitiveName, float gravity, const BirdEntity::Status& status, float collisionEpsilon, float centerXEllipse, float centerYEllipse, float aEllipse, float bEllipse, float speedScalar, float timeOffset, float currentWidth, float currentHeight);

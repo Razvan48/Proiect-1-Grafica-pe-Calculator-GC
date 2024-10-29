@@ -35,6 +35,11 @@ protected:
 
 	float currentInitialLaunchSpeed;
 
+	int rotationDirection;
+
+	GLfloat targetPosX;
+	GLfloat targetPosY;
+
 public:
 	static ThrowableEntity& get();
 
@@ -47,4 +52,7 @@ public:
 	inline float getLaunchDuration() const { return this->launchDuration; }
 
 	inline ThrowableEntity::Status getStatus() const { return this->status; }
+
+	inline GLfloat getTargetPosX() const { return this->targetPosX; }
+	inline GLfloat getTargetPosY() const { return this->targetPosY; }
 };
