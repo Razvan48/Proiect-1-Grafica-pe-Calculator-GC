@@ -17,10 +17,23 @@ protected:
 	BackgroundEntity(const BackgroundEntity&& other) = delete;
 	BackgroundEntity& operator= (const BackgroundEntity&& other) = delete;
 
+	enum class Status
+	{
+		DAY,
+		SUNSET,
+		NIGHT,
+		SUNRISE,
+	};
+
 	float width;
 	float height;
 
 	std::string primitiveName;
+
+	BackgroundEntity::Status status;
+
+	float dayDuration;
+	float timeSinceLastStatusChange;
 
 public:
 	static BackgroundEntity& get();
