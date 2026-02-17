@@ -9,3 +9,11 @@ Luculescu Teodor ($351$) <br/>
 <br/>
 <br/>
 
+<p align = "center">
+  <img width="505" height="425" src="https://github.com/Razvan48/Proiect-1-Grafica-pe-Calculator-GC/blob/main/Demo/Demo.gif">
+</p>
+
+<br/>
+<br/>
+<br/>
+
